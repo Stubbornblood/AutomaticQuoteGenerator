@@ -9,7 +9,21 @@ let apiQuotes = [];
 function newQuote(){
     // pick a random quote from apiQuotes array
     const quote = apiQuotes[Math.floor(Math.random()*apiQuotes.length)];
-    authorText.innerHTML = quote.author;
+
+    // Check if quthor field is blank and replace it with 'Unknow'
+
+    if(!quote.author){
+        authorText.innerHTML  = "Unknown";
+    }else{
+        authorText.innerHTML = quote.author;
+    }
+    // Check quote length to determin styling
+
+    if(quote.text.length>120){
+        quoteText.classList.add('long-quote');
+    }else{
+        quoteText.classList.remove('long-quote');
+    }
     quoteText.innerHTML = quote.text;
     
 }
@@ -24,6 +38,16 @@ async function getQuotes(){
         // Catch Error Here
     }
 }
+
+// Tweet Quote
+function tweetQuote(){
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteText.innerText} - ${authorText.innerText}`;
+    window.open(twitterUrl,'_blank');
+}
+
+// Event Listners
+newQuoteBtn.addEventListener('click',newQuote);
+twitterBtn.addEventListener('click',tweetQuote);
 
 //onload
 
